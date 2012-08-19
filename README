@@ -1,0 +1,72 @@
+PirateBox Node.js server - original idea by David Darts - http://wiki.daviddarts.com/PirateBox
+reimplemented by crypto.scythe (crypto.scythe@gmail.com)
+
+changelog:
+
+v0.8
+small optimizations
+
+v0.7
+working chat implemented
+
+v0.6
+outsourced configuration and templates
+
+v0.5
+code changes for debugging. 
+
+v0.4
+files in transfer from the system temp directory are not shown in file list and are not downloadable until they are finished
+ 
+v0.3
+implemented force download instead of viewing in browser
+ 
+v0.2
+moved duplicate calls to separate functions
+
+
+compatibility:
+tested with Node.js version 0.4.2 running on OS X 10.6 and FreeBSD 8.2
+ 
+the following NPM modules are needed for this to work:
+information for installing & using NPM - Node Package Manager - http://npmjs.org
+
+formidable
+mime
+url
+forever -> only for running the script continuously
+
+installation instructions:
+(these are for FreeBSD but should be easily adaptable to other unixoid OSes)
+
+1. install Node.js, you can find it in ports/www/node
+compile it 
+# make install clean
+
+2. install Node Package Manager from www.npmjs.org
+the easiest ways is
+# curl http://npmjs.org/install.sh | sh
+
+3. install the needed Node.js packages
+# npm install formidable
+# npm install mime
+# npm install url
+# npm install forever
+
+4. move piratebox.js and its folders to where you want it
+go the the folder you extracted it and
+# mkdir /var/piratebox
+# mv * /var/piratebox
+
+5. configure the piratebox script to use the folders you have chosen
+open the piratebox.js in your favorite plaintext editor and change the values of
+"pbUPLOADDIRECTORY" and "pbWEBROOT" to the folders you created.
+
+6. now you can start the piratebox
+to start it normal
+# node piratebox.js
+to start it with automatic restarting:
+# forever piratebox.js
+
+7. The piratebox should run now at port 80
+check the piratebox-config.js file for more configuration options
