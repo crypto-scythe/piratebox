@@ -92,8 +92,11 @@ http.createServer(function(request, res){
         form.parse(request, function(err, fields, files) {
             if(err) {
                 util.log(err + ' (during file upload)');
+            } else if (files.upload.name == "") { // to start page if no´file uploaded
+                sendHTML(res, pbTemplates.PAGEUPLOADFORM + pbTemplates.PAGEFTP + pbTemplates.PAGEUPLOADSUCCESS);
             } else {
             // Move file to upload folder by copying and deleting the temporary file
+                console.log(files.upload.name);
                 temporaryFile = files.upload.path;
                 destinationFile = pbConfig.UPLOADDIRECTORY + files.upload.name;
                 filesInProgress[files.upload.name] = true;
