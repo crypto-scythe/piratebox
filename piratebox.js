@@ -92,8 +92,11 @@ http.createServer(function(request, res){
         form.parse(request, function(err, fields, files) {
             if(err) {
                 util.log(err + ' (during file upload)');
+            } else if (files.upload.name == "") { // to start page if no´file uploaded
+                sendHTML(res, pbTemplates.PAGEUPLOADFORM + pbTemplates.PAGEFTP + pbTemplates.PAGEUPLOADSUCCESS);
             } else {
             // Move file to upload folder by copying and deleting the temporary file
+                console.log(files.upload.name);
                 temporaryFile = files.upload.path;
                 destinationFile = pbConfig.UPLOADDIRECTORY + files.upload.name;
                 filesInProgress[files.upload.name] = true;
@@ -140,7 +143,7 @@ form.parse(request, function(err, fields, files) {
                     } else {
                         fileSize += ' bytes';
                     }
-                    outputFileList += '<p>' + fileSize + ' / <a href="/incoming/' + escape(fileName) + '">' + fileName + '</a></p>';
+                    outputFileList += '<p>' + fileSize + ' / <a href="/incoming/' + escape(fileName) + '">' + fileName + '</a> / <a href="/delete/' + escape(fileName) + '"><b>X</b></a></p>';
                 }
             } else {
                 outputFileList = pbTemplates.PAGENOFILES;
@@ -201,6 +204,13 @@ form.parse(request, function(err, fields, files) {
         return;
     } 
 */
+    } else if( request.url.substr(0, 8) == '/delete/' && request.url.length > 8) {
+        deleteFile = unescape(request.url.substr(-1 * (request.url.length - 8)));
+        fs.unlinkSync(pbConfig.UPLOADDIRECTORY + deleteFile);
+        debug('deleted file ' + pbConfig.UPLOADDIRECTORY + deleteFile);
+        res.writeHead(302, { 'Location': '/incoming/'});
+        res.end('File deleted');
+
     }Â else if( checkWebDirectory( request.url ) == true ) {
         fs.readFile( pbConfig.WEBROOT + request.url, function( err, data ) {
         res.writeHead(200, { 'Content-Type': mime.lookup( pbConfig.WEBROOT + request.url ) } );

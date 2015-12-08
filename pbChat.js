@@ -1,5 +1,4 @@
 var fs = require( 'fs' );
-var path = require( 'path' );
 var pbConfig = require( './pbConfig.js' );
 var pbTemplates = require( './pbTemplates.js' );
 
@@ -18,7 +17,7 @@ exports.display = function() {
 
 exports.save = function( init ) {
     if( init == true ) {
-        if( path.existsSync( pbConfig.CHATFILE ) == true ) {
+        if( fs.existsSync( pbConfig.CHATFILE ) == true ) {
             this.chatlog = fs.readFileSync( pbConfig.CHATFILE, 'utf8' );
         } else {
             this.chatlog = exports.createChatEntry( 'Pirate<span style="color: maroon;">Box</span>', 'Chat and share files anonymously!', 'black' );

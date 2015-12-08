@@ -1,6 +1,10 @@
 PirateBox Node.js server - original idea by David Darts - http://wiki.daviddarts.com/PirateBox
 reimplemented by crypto.scythe (crypto.scythe@gmail.com)
 
+changes by camperking(@gmail.com):
+- Now users can delete files.
+  Simply click on the x after the filename in the filelist.
+
 changelog:
 
 v0.8
